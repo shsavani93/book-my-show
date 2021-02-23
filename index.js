@@ -36,15 +36,24 @@ app.get('/api/nowPlayingMovies', async (req, res) => {
 
 // An api endpoint that returns a detail of selected movie
 app.get('/api/movie/:id', async (req, res) => {
-    console.log("in backend")
     const apiKey = keys.apiKey; 
-    console.log(req.params)
     const apiUrl = "https://api.themoviedb.org/3/movie/" + req.params.id + "?api_key=" + apiKey + "&language=en-US";
 
     await fetch(apiUrl)
     .then((res) => res.json())
     .then((data) => res.send({moviesDetail: data}))
     console.log('Sent details of movies.');
+});
+
+// An api endpoint that returns movies based on search result
+app.get('/api/movies/search/:query', async (req, res) => {
+    const apiKey = keys.apiKey; 
+    const apiUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&language=en-US&page=1&include_adult=false&query=" + req.params.query;
+
+    await fetch(apiUrl)
+    .then((res) => res.json())
+    .then((data) => res.send({moviesList: data}))
+    console.log('Sent movies for the given search query.');
 });
 
 // Handles any requests that don't match the ones above
