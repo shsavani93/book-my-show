@@ -56,6 +56,17 @@ app.get('/api/movies/search/:query', async (req, res) => {
     console.log('Sent movies for the given search query.');
 });
 
+
+app.get('/api/movie/:id/videos', async (req, res) => {
+    const apiKey = keys.apiKey; 
+    const apiUrl = "https://api.themoviedb.org/3/movie/" + req.params.id + "/videos?api_key=" + apiKey + "&language=en-US";
+
+    await fetch(apiUrl)
+    .then((res) => res.json())
+    .then((data) => res.send({moviesDetail: data}))
+    console.log('Sent video details of movie.');
+});
+
 // Handles any requests that don't match the ones above
 // app.get('*', (req,res) =>{
 //     res.sendFile(path.join(__dirname+'/client/build/index.html'));
