@@ -2,10 +2,36 @@ const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch');
 var cors = require('cors');
+const bodyParser = require("body-parser");
 const app = express();
 const keys = require('./config/keys.js')
 
-app.use(cors());
+var corsOptions = {
+  origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+require('./routes/auth-routes')(app);
+
+
+const db = require("./models/db-connection");
+const dbConfig = require("./config/db");
+db.mongoose
+  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
+  })
+  .catch(err => {
+    console.error("Connection error", err);
+    process.exit();
+  });
 
 // Serve the static files from the React app
 //app.use(express.static(path.join(__dirname, 'client/build')));
