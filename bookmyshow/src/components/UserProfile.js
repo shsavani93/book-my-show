@@ -33,11 +33,10 @@ class UserProfile extends Component {
           <strong>Email:</strong>{" "}
           {currentUser.email}
         </p>
-        <strong>Authorities:</strong>
-        <ul>
-          {currentUser.roles &&
-            currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-        </ul>
+        <p>
+          <strong>City:</strong>{" "}
+          {currentUser.city}
+        </p>
       </div>
     );
   }

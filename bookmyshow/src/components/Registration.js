@@ -46,21 +46,52 @@ const validatePassword = value => {
   }
 };
 
-export default class Register extends Component {
+
+export default class Registration extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
+      city: "",
+      cities: [],
       successful: false,
       message: ""
     };
+  }
+
+  componentDidMount(){
+    this.getCities();
+  }
+
+
+  getCities(){
+      // const res = await axios.get('https://wft-geo-db.p.rapidapi.com/v1/locale/locales')
+      // const data = res.data
+  
+      // const options = data.map(d => ({
+      //   "value" : d.id,
+      //   "label" : d.name
+      // }))
+
+      this.setState({
+        cities: [
+          {id: 'abd', name: 'Ahemdabad'},
+          {id: 'raj', name: 'Rajkot'},
+          {id: 'vad', name: 'Vadodara'},
+          {id: 'mum', name: 'Mumbai'},
+          {id: 'pun', name: 'Pune'},
+          {id: 'bag', name: 'Bangalore'},
+          {id: 'sur', name: 'Surat'}
+        ]
+      });
   }
 
   onChangeUsername(e) {
@@ -81,6 +112,12 @@ export default class Register extends Component {
     });
   }
 
+  onChangeCity(e) {
+    this.setState({
+      city: e.target.value
+    })
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -95,7 +132,8 @@ export default class Register extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.city
       ).then(
         response => {
           this.setState({
@@ -172,6 +210,15 @@ export default class Register extends Component {
                     onChange={this.onChangePassword}
                     validations={[required, validatePassword]}
                   />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="city">City</label>
+                  <select value={this.state.city} onChange={this.onChangeCity} className="form-control">
+                    {this.state.cities.map((option) => (
+                      <option value={option.name}>{option.name}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="form-group">
