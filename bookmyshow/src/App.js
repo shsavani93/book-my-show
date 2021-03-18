@@ -73,7 +73,7 @@ class App extends Component {
               </li>
 
               <li className="nav-item">
-                <Link to={'./coming_soon'}>
+                <Link to={'./coming_soon'} className="nav-link">
                 <Button variant="contained" color="primary">
                   Coming Soon
                 </Button>
@@ -81,7 +81,7 @@ class App extends Component {
               </li>
 
               <li className="nav-item">
-                <Link to={'./now_playing'}>
+                <Link to={'./now_playing'} className="nav-link">
                 <Button variant="contained" color="primary">
                   Now Playing
                 </Button>
@@ -92,7 +92,7 @@ class App extends Component {
           </div>
           </nav>
         <Switch>
-          {/* <Route exact path='/' component={UpcomingMoviesList}/> */}
+          <Route exact path='/' component={Home}/>
           <Route path='/coming_soon' component={UpcomingMoviesList}/>
           <Route path='/now_playing' component={MoviesList}/>
           <Route  path='/movie/:id' component={MoviesDetail}/>
