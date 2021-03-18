@@ -40,7 +40,7 @@ class MoviesDetail extends Component {
             <ReactPlayer
                 url={videoUrl} 
                 width='100%'
-                height='50%'
+                height='100%'
             />
             </div>
             <div className="col-md-6 col-sm-6">
