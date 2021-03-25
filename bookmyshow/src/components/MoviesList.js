@@ -11,6 +11,7 @@ class MoviesList extends Component {
     }
 
     componentDidMount() {
+        console.log("in movies list component")
         this.getList();
     }
 
@@ -33,10 +34,10 @@ class MoviesList extends Component {
     render() {
         return (
             <div style={{ padding: 20 }}>
-                <input type="text" value={this.props.query} onChange={ this.handleChange.bind(this) } placeholder="Search by title"></input>
+                {/* <input type="text" value={this.props.query} onChange={ this.handleChange.bind(this) } placeholder="Search by title"></input>
                 <button onClick={ this.handleClick.bind(this, this.state.query)}>
                     Search 
-                </button>
+                </button> */}
                 <MovieMediaCard list={this.state.movies} />
             </div>
         );

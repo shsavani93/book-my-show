@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Home from './Home';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -25,7 +24,6 @@ export default function MovieMediaCard(props) {
     const imageUrl = 'https://image.tmdb.org/t/p/w500/';
     return (
         <Container>
-            <Home/>
             <Grid container spacing={1}>
                 {props.list.map((movie) => (
                     <Grid item key={movie.id} xs={12} sm={3} zeroMinWidth>

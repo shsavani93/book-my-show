@@ -1,6 +1,7 @@
 const keys = require('../config/keys');
 const fetch = require('node-fetch');
 const controller = require("../controllers/movies-controller");
+const { authJwt } = require("../middlewares");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -11,10 +12,10 @@ module.exports = function(app) {
       next();
     });
 
-    const apiKey = keys.apiKey; 
-
     // An api endpoint that returns a list of upcoming movies
-    app.get('/api/upcomingMovies', controller.upcomingMovies);
+    app.get('/api/upcomingMovies' , [
+      authJwt.verifyToken
+    ], controller.upcomingMovies);
 
     // An api endpoint that returns a list of now playing movies
     app.get('/api/nowPlayingMovies', controller.nowPlayingMovies);

@@ -60,7 +60,7 @@ export default class Registration extends Component {
       username: "",
       email: "",
       password: "",
-      city: "",
+      city: "Ahmedabad",
       cities: [],
       successful: false,
       message: ""
@@ -73,14 +73,6 @@ export default class Registration extends Component {
 
 
   getCities(){
-      // const res = await axios.get('https://wft-geo-db.p.rapidapi.com/v1/locale/locales')
-      // const data = res.data
-  
-      // const options = data.map(d => ({
-      //   "value" : d.id,
-      //   "label" : d.name
-      // }))
-
       this.setState({
         cities: [
           {id: 'abd', name: 'Ahemdabad'},
@@ -216,7 +208,7 @@ export default class Registration extends Component {
                   <label htmlFor="city">City</label>
                   <select value={this.state.city} onChange={this.onChangeCity} className="form-control">
                     {this.state.cities.map((option) => (
-                      <option value={option.name}>{option.name}</option>
+                      <option key={option.id} value={option.name}>{option.name}</option>
                     ))}
                   </select>
                 </div>
