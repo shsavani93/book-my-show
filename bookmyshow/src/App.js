@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, Switch, Link, BrowserRouter  } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import './App.css';
 import Navbar from 'react-bootstrap/Navbar';
 import FormControl from 'react-bootstrap/FormControl';
@@ -16,6 +16,7 @@ import Search from './components/Search/Search';
 import Home from './components/Home';
 import UpcomingMoviesList from './components/UpcomingMoviesList';
 import TopRatedMovies from './components/TopRatedMovies';
+import Header from './components/Header';
 
 import AuthService from './services/auth-service';
 class App extends Component {
@@ -41,6 +42,7 @@ class App extends Component {
 
     logOut() {
       AuthService.logout();
+      this.setState({currentUser:null})
     }
 
     handleChange(e) {
@@ -49,9 +51,8 @@ class App extends Component {
 
     render (){
       const { currentUser } = this.state;
-
       return (
-        <BrowserRouter>
+        <div>
           {currentUser ? (
               <div>
                 <Navbar bg="dark" variant="dark">
@@ -77,22 +78,7 @@ class App extends Component {
               </div>
           ) : (
               <div>
-                <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand as={Link} to="/">BookMyShow</Navbar.Brand>
-                    <Nav.Link  as={Link} to="/movies/now_playing" >Now Playing</Nav.Link>
-                    <Nav.Link  as={Link} to="/movies/top_rated" >Top Rated</Nav.Link>
-                    <Nav.Link  as={Link} to="/movies/upcoming" >Upcoming</Nav.Link>
-                    <Form inline>
-                      <FormControl type="text" value={this.state.query} onChange={ this.handleChange.bind(this) } placeholder="Search" className="mr-sm-2" />
-                      <Link to={`/search/${this.state.query}`}>
-                        <Button variant="outline-info">Search</Button>
-                      </Link>
-                    </Form>
-                    <Nav className="ml-auto">
-                      <Nav.Link  as={Link} to="/login">Login</Nav.Link>
-                      <Nav.Link  as={Link} to="/register">Sign Up</Nav.Link>
-                    </Nav>
-                </Navbar>
+                <Header/>
               </div>
           )}
         <Switch>
@@ -105,9 +91,12 @@ class App extends Component {
           <Route path='/register' component={Registration}/>
           <Route path='/profile' component={UserProfile}/>
           <Route path='/login' component={Login}/>
-          <Route path='/search/:query' component={Search}/>
+          {/* <Route path='/search/:query' component={Search}/> */}
+          <Route path="/search/:query" render={(props) => (
+            <Search key={props.match.params.query} {...props} />)
+} />
         </Switch>
-        </BrowserRouter>
+        </div>
       );
     }
 }

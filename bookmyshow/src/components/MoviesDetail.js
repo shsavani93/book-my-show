@@ -52,21 +52,21 @@ class MoviesDetail extends Component {
                     {videoUrl ? (<ReactPlayer
                         className="player"
                         url={videoUrl}
-                        height="50%"
+                        height="400px"
                         width="100%"
                     />) : <h1></h1>}
                 
                 <div className="row col-md-12 col-sm-12">
-                    <div className="col-md-6 col-sm-6" style={{ paddingLeft: "130px", paddingTop: "240px" }}>
-                        <img src={posterImageUrl} alt="" width="200px" height="200px" />
+                    <div className="col-md-6 col-sm-6" style={{ paddingLeft: "130px", paddingTop: "2px" }}>
+                        <img src={posterImageUrl} alt="" width="200px" height="300px" />
                     </div>
-                    <div className="col-md-6 col-sm-6" style={{ paddingTop: "260px", marginLeft: "-88px" }}>
+                    <div className="col-md-6 col-sm-6" style={{ paddingTop: "2px", marginLeft: "-88px" }}>
                             <h1>{data.title}</h1>
                             {/* <p>{data.original_language}</p>   */}
                     </div>
 
 
-                    <div className="row col-md-12 col-sm-12" style={{marginTop: "-60px", marginLeft: "20px"}}>
+                    <div className="row col-md-12 col-sm-12" style={{marginTop: "-225px", marginLeft: "20px"}}>
                         <div className="col-md-4 col-sm-4">
                         </div>
                         <div className="col-md-6 col-sm-6">
@@ -78,10 +78,10 @@ class MoviesDetail extends Component {
                     </div>
 
 
-                    <div className="col-md-3 col-sm-3" style={{marginLeft: "438px"}}>
+                    <div className="row col-md-3 col-sm-3" style={{marginLeft: "438px", marginTop: "-88px"}}>
                         <strong>Cast</strong>
                     </div>
-                    <div className="container mb-3" style={{marginLeft: "438px", marginTop: "15px"}}>
+                    <div className="container mb-3" style={{marginLeft: "438px", marginTop: "-80px"}}>
                         <div className="row d-flex flex-row py-3">
                             <ImgMediaCard castDetails={moviesCast} />
                         </div>
