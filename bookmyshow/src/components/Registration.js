@@ -60,7 +60,7 @@ export default class Registration extends Component {
       username: "",
       email: "",
       password: "",
-      city: "Ahmedabad",
+      city: "Phoenix",
       cities: [],
       successful: false,
       message: ""
@@ -75,13 +75,16 @@ export default class Registration extends Component {
   getCities(){
       this.setState({
         cities: [
-          {id: 'abd', name: 'Ahemdabad'},
-          {id: 'raj', name: 'Rajkot'},
-          {id: 'vad', name: 'Vadodara'},
-          {id: 'mum', name: 'Mumbai'},
-          {id: 'pun', name: 'Pune'},
-          {id: 'bag', name: 'Bangalore'},
-          {id: 'sur', name: 'Surat'}
+          {id: '1', name: 'Phoenix'},
+          {id: '2', name: 'Tempe'},
+          {id: '3', name: 'Tucson'},
+          {id: '4', name: 'Mesa'},
+          {id: '5', name: 'Scottsdale'},
+          {id: '6', name: 'Glendale'},
+          {id: '7', name: 'Gilbert'},
+          {id: '8', name: 'Flagstaff'},
+          {id: '9', name: 'Maricopa'},
+          {id: '10', name: 'Chandler'}
         ]
       });
   }

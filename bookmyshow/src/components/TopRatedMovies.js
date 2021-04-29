@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MovieCard from './MovieCard';
 import Pagination from './Pagination';
 
-class UpcomingMoviesList extends Component {
+class TopRatedMovies extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +16,13 @@ class UpcomingMoviesList extends Component {
   }
 
   componentDidMount() {
-    this.getUpcomingMovies(1)
+    this.getTopRatedMovies(1);
   }
 
   onPageChanged = data => {
     const { currentPage, totalPages, pageLimit } = data;
     console.log(currentPage)
-    this.getUpcomingMovies(currentPage);
+    this.getTopRatedMovies(currentPage);
     const { movies } = this.state;
     const offset = (currentPage - 1) * pageLimit;
     const currentMovies = movies.slice(offset, offset + pageLimit);
@@ -30,11 +30,12 @@ class UpcomingMoviesList extends Component {
     this.setState({ currentPage, currentMovies, totalPages });
   }
 
-  getUpcomingMovies = (page) => {
+  getTopRatedMovies = (page) => {
     console.log(page)
-    fetch(`/api/upcomingMovies/${page}`)
+    fetch(`/api/topRatedMovies/${page}`)
       .then(res => res.json())
       .then(list => this.setState({ movies: list.moviesList.results, currentMovies: list.moviesList.results}));
+      
   }
 
   render() {
@@ -51,7 +52,7 @@ class UpcomingMoviesList extends Component {
           <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
             <div className="d-flex flex-row align-items-center">
               <h2 className={headerClass}>
-               Movies
+                Movies
               </h2>
               {currentPage && (
                 <span className="current-page d-inline-block h-100 pl-4 text-secondary">
@@ -70,4 +71,4 @@ class UpcomingMoviesList extends Component {
   }
 }
 
-export default UpcomingMoviesList;
+export default TopRatedMovies;
