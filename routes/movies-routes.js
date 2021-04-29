@@ -13,15 +13,23 @@ module.exports = function(app) {
     });
 
     // An api endpoint that returns a list of upcoming movies
-    app.get('/api/upcomingMovies' , [
-      authJwt.verifyToken
-    ], controller.upcomingMovies);
+    // app.get('/api/upcomingMovies' , [
+    //   authJwt.verifyToken
+    // ], controller.upcomingMovies);
+    app.get('/api/upcomingMovies/:id', controller.upcomingMovies);
+
+    app.get('/api/popularMovies', controller.popularMovies);
 
     // An api endpoint that returns a list of now playing movies
-    app.get('/api/nowPlayingMovies', controller.nowPlayingMovies);
+    app.get('/api/nowPlayingMovies/:id', controller.nowPlayingMovies);
+
+    // An api endpoint that returns a list of top rated movies
+    app.get('/api/topRatedMovies/:id', controller.topRatedMovies);
 
     // An api endpoint that returns a detail of selected movie
     app.get('/api/movie/:id', controller.getMovieDetails);
+
+    app.get('/api/movie/:id/credits', controller.getMovieCast);
 
     // An api endpoint that returns movies based on search result
     app.get('/api/movies/search/:query', controller.getMoviesBySearchName);
