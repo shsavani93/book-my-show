@@ -1,30 +1,50 @@
-import React, {Component} from 'react';
-import MovieMediaCard from '../components/MovieMediaCard';
+import React, { Component } from 'react';
+import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state =  {
-        movies: []
+    this.state = {
+      movies: []
     }
   }
 
   componentDidMount() {
-    this.getMoviesList();
+    this.getLatestMovies();
   }
 
-  getMoviesList = () => {
-    fetch('/api/nowPlayingMovies')
-        .then(res => res.json())
-        .then(list => this.setState({ movies: list.moviesList})) 
+  getLatestMovies() {
+    fetch('/api/popularMovies')
+      .then(res => res.json())
+      .then(list => this.setState({ movies: list.moviesList }))
   }
 
   render() {
-      return (
-          <div>
-            <MovieMediaCard list={this.state.movies} />
-          </div>
-      )
+    const data = this.state.movies;
+    const posterImageUrl = "https://image.tmdb.org/t/p/w500//";
+    return (
+      <div>
+        <Carousel>
+          {data.slice(1, 6).map(movie =>
+            <Carousel.Item key={movie.id}>
+              <Link to={`/movie/${movie.id}`}>
+                <img
+                  src={posterImageUrl + movie.poster_path}
+                  width="100%"
+                  height="500px"
+                  alt=""
+                />
+              </Link>
+              <Carousel.Caption>
+                <h3>{movie.title}</h3>
+              </Carousel.Caption>
+            </Carousel.Item>
+          )}
+        </Carousel>
+      </div >
+
+    )
   }
 }
 
