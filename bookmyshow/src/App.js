@@ -87,14 +87,15 @@ class App extends Component {
           <Route  exact path='/movies/now_playing' component={MoviesList}/>
           <Route exact path='/movies/upcoming' component={UpcomingMoviesList}/>
           <Route exact path='/movies/top_rated' component={TopRatedMovies}/>
-          <Route  path='/movie/:id' component={MoviesDetail}/>
+          <Route path="/movie/:id" render={(props) => (
+            <MoviesDetail key={props.match.params.id} {...props} />)
+          } />
           <Route path='/register' component={Registration}/>
           <Route path='/profile' component={UserProfile}/>
           <Route path='/login' component={Login}/>
-          {/* <Route path='/search/:query' component={Search}/> */}
           <Route path="/search/:query" render={(props) => (
             <Search key={props.match.params.query} {...props} />)
-} />
+          } />
         </Switch>
         </div>
       );

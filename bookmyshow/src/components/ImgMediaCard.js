@@ -17,7 +17,7 @@ export default function ImgMediaCard(props) {
   const imageUrl = "https://image.tmdb.org/t/p/w500//";
   return (
     <div>
-      <GridList cols={5}>
+      <GridList cols={5} style={{padding:"60px", paddingLeft: "9px", paddingTop: "10px"}}>
         {props.castDetails.map((tile) => (
           <GridListTile key={tile.id}>
             <Avatar alt={tile.name} src={imageUrl+ tile.profile_path} className={classes.large}  />

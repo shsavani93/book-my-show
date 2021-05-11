@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import ReactPlayer from "react-player";
-import ImgMediaCard from './ImgMediaCard';
 import '../../src/Pagination.scss';
+import MovieDetailTabs from './MovieDetailTabs';
+import ImageCardList from './ImageCardList';
+import GridList from '@material-ui/core/GridList';
 
 class MoviesDetail extends Component {
     constructor(props) {
@@ -9,7 +11,9 @@ class MoviesDetail extends Component {
         this.state = {
             detail: { 1: "x" },
             video: "1",
-            movieCast: [{ 1: "x" }]
+            movieCast: [{ 1: "x" }],
+            reviews: [{}],
+            similarMovies: []
         }
     }
 
@@ -17,6 +21,8 @@ class MoviesDetail extends Component {
         this.getDetails();
         this.getVideos();
         this.getCast();
+        this.getReviews();
+        this.getSimilarMovies();
     }
 
     getDetails = () => {
@@ -40,12 +46,27 @@ class MoviesDetail extends Component {
             .then(result => this.setState({ movieCast: result.moviesDetail.cast }))
     }
 
+    getReviews = () => {
+        const movieId = this.props.match.params.id;
+        fetch(`/api/movie/${movieId}/reviews`)
+            .then(res => res.json())
+            .then(result => this.setState({ reviews: result.moviesDetail.results }))
+    }
+
+    getSimilarMovies = () => {
+        const movieId = this.props.match.params.id;
+        fetch(`/api/movie/${movieId}/similar`)
+            .then(res => res.json())
+            .then(result => this.setState({ similarMovies: result.moviesList }))
+    }
+
     render() {
         const data = this.state.detail;
         const moviesCast = this.state.movieCast.filter(cast => cast.known_for_department === "Acting" && cast.order < 10)
         const videoId = this.state.video[0] ? this.state.video[0].key : null;
         const videoUrl = videoId != null ? "https://www.youtube.com/watch?v=" + videoId : null;
         const posterImageUrl = "https://image.tmdb.org/t/p/w500//" + data.poster_path;
+
         return (
             <div>
                 <div id="player1">
@@ -54,39 +75,25 @@ class MoviesDetail extends Component {
                         url={videoUrl}
                         height="400px"
                         width="100%"
-                    />) : <h1></h1>}
-                
-                <div className="row col-md-12 col-sm-12">
-                    <div className="col-md-6 col-sm-6" style={{ paddingLeft: "130px", paddingTop: "2px" }}>
-                        <img src={posterImageUrl} alt="" width="200px" height="300px" />
-                    </div>
-                    <div className="col-md-6 col-sm-6" style={{ paddingTop: "2px", marginLeft: "-88px" }}>
+                    />) : <br />}
+
+                    <div className="row col-md-12 col-sm-12">
+                        <div className="col-md-6 col-sm-6" style={{ paddingLeft: "130px", marginTop: "-8px" }}>
+                            <img src={posterImageUrl} alt="" width="200px" height="300px" />
+                        </div>
+                        <div className="col-md-6 col-sm-6" style={{ paddingTop: "2px", marginLeft: "-88px" }}>
                             <h1>{data.title}</h1>
-                            {/* <p>{data.original_language}</p>   */}
-                    </div>
-
-
-                    <div className="row col-md-12 col-sm-12" style={{marginTop: "-225px", marginLeft: "20px"}}>
-                        <div className="col-md-4 col-sm-4">
                         </div>
-                        <div className="col-md-6 col-sm-6">
-                            <strong>Summary</strong>
-                            <p>{data.overview}</p>
-                            {/* Tagline: {data.tagline} <br /> */}
-                            {/* <strong>Release Date:</strong> {data.release_date} <br /> */}
+
+
+                        <div className="col-md-12 col-sm-12" style={{ marginTop: "-186px", paddingLeft: "505px" }}>
+                            <MovieDetailTabs summary={data.overview} cast={moviesCast} reviews={this.state.reviews} />
+                        </div>
+                        <div className="col-md-12 col-sm-12" style={{ marginLeft: '50px' }}>
+                            {this.state.similarMovies.length != 0 ? (
+                                <ImageCardList movies={this.state.similarMovies} />) : <br />}
                         </div>
                     </div>
-
-
-                    <div className="row col-md-3 col-sm-3" style={{marginLeft: "438px", marginTop: "-88px"}}>
-                        <strong>Cast</strong>
-                    </div>
-                    <div className="container mb-3" style={{marginLeft: "438px", marginTop: "-80px"}}>
-                        <div className="row d-flex flex-row py-3">
-                            <ImgMediaCard castDetails={moviesCast} />
-                        </div>
-                    </div>
-                </div>
                 </div>
             </div>
 
