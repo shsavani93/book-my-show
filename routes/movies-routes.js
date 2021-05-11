@@ -37,4 +37,10 @@ module.exports = function(app) {
 
     // An api endpoint that returns videos for the selected movie
     app.get('/api/movie/:id/videos', controller.getMovieVideos);
+
+    // An api endpoint that returns reviews for the selected movie
+    app.get('/api/movie/:id/reviews', controller.getMovieReviews);
+
+    // An api endpoint that returns similar movies for the selected movie
+    app.get('/api/movie/:id/similar', controller.getSimilarMovies);
 };

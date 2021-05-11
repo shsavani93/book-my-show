@@ -75,3 +75,21 @@ exports.popularMovies = async (req, res) => {
 
     console.log('Sent list of popular movies.');
 };
+
+exports.getMovieReviews = async (req, res) => {
+    const apiUrl = "https://api.themoviedb.org/3/movie/" + req.params.id + "/reviews?api_key=" + apiKey + "&language=en-US";
+
+    await fetch(apiUrl)
+    .then((res) => res.json())
+    .then((data) => res.send({moviesDetail: data}))
+    console.log('Sent reviews of selected movie.');
+};
+
+exports.getSimilarMovies = async (req, res) => {
+    const apiUrl = "https://api.themoviedb.org/3/movie/" + req.params.id + "/similar?api_key=" + apiKey + "&language=en-US";
+
+    await fetch(apiUrl)
+    .then((res) => res.json())
+    .then((data) => res.send({moviesList: data.results}))
+    console.log('Sent reviews of selected movie.');
+};
