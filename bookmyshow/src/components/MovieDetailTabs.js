@@ -75,12 +75,16 @@ export default function MovieDetailTabs(props) {
   };
 
   const computeUrl = (imagePath) => {
-    var path = imagePath;
-    if(path.includes('avatar')){
-      path = path.split("/");
-      return imageUrl + "/" + path[path.length - 1];
-    }else{
-      return imageUrl + imagePath;
+    if (imagePath != null) {
+      var path = imagePath;
+      if (path.includes('avatar')) {
+        path = path.split("/");
+        return imageUrl + "/" + path[path.length - 1];
+      } else {
+        return imageUrl + imagePath;
+      }
+    } else {
+      return null;
     }
   }
 
@@ -109,10 +113,10 @@ export default function MovieDetailTabs(props) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {value == "1" ? (
+        {value == "1" && movieReviews.length !=0 ? (
           <div>
             {movieReviews.slice(0, 6).map((review) => (
-              
+
               <div key={review.author_details.username}>
                 <Avatar alt={review.author} src={computeUrl(review.author_details.avatar_path)} className={classes.large} />
                 <strong>{review.author}</strong>
@@ -134,7 +138,7 @@ export default function MovieDetailTabs(props) {
               </div>
             ))}
           </div>
-        ) : "Reviews"}
+        ) : "No Reviews found"}
       </TabPanel>
     </div>
   );
